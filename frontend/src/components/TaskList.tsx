@@ -9,6 +9,7 @@ export function TaskList() {
   useEffect(() => {
     getAllTasks().then((res) => {
       if (!res.success) {
+        alert("Failed to fetch tasks");
         return console.error(res.error);
       }
       setTasks(res.data);
@@ -22,7 +23,7 @@ export function TaskList() {
         {tasks.length === 0 ? (
           <span className={styles.noTasks}>No tasks yet. Add one above to get started.</span>
         ) : (
-          tasks.map((task) => <TaskItem task={task} key={task._id} />)
+          tasks.map((task) => <TaskItem initialTask={task} key={task._id} />)
         )}
       </div>
     </div>
