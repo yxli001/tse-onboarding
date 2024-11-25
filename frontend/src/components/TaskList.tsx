@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { getAllTasks, Task } from "src/api/tasks";
-
+import { useEffect, useState } from "react";
+import { Task, getAllTasks } from "src/api/tasks";
+import { TaskItem } from "src/components/TaskItem";
 import styles from "src/components/TaskList.module.css";
-import { TaskItem } from "./TaskItem";
 
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
