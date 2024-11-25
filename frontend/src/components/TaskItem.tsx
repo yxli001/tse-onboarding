@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { CheckButton } from "src/components";
-import { getAllTasks } from "src/api/tasks";
 import styles from "src/components/TaskItem.module.css";
 
 import type { Task } from "src/api/tasks";
