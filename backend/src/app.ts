@@ -41,6 +41,8 @@ app.use("/api/user", userRoutes);
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+  console.error(error);
+
   // 500 is the "internal server error" error code, this will be our fallback
   let statusCode = 500;
   let errorMessage = "An error has occurred.";

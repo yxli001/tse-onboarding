@@ -171,6 +171,7 @@ export type APIResult<T> = APIData<T> | APIError;
  */
 export function handleAPIError(error: unknown): APIError {
   if (error instanceof Error) {
+    console.log(error);
     return { success: false, error: error.message };
   } else if (typeof error === "string") {
     return { success: false, error };

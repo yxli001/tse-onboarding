@@ -1,4 +1,5 @@
 import { get, handleAPIError, post, put } from "src/api/requests";
+import { User } from "src/api/users";
 
 import type { APIResult } from "src/api/requests";
 
@@ -13,6 +14,7 @@ export interface Task {
   description?: string;
   isChecked: boolean;
   dateCreated: Date;
+  assignee?: User;
 }
 
 /**
@@ -30,6 +32,11 @@ interface TaskJSON {
   description?: string;
   isChecked: boolean;
   dateCreated: string;
+  assignee?: {
+    _id: string;
+    name: string;
+    profilePictureURL: string;
+  };
 }
 
 /**
@@ -40,12 +47,20 @@ interface TaskJSON {
  * @returns The parsed Task object
  */
 function parseTask(task: TaskJSON): Task {
+  console.log(task);
   return {
     _id: task._id,
     title: task.title,
     description: task.description,
     isChecked: task.isChecked,
     dateCreated: new Date(task.dateCreated),
+    assignee:
+      task.assignee &&
+      ({
+        _id: task.assignee._id,
+        name: task.assignee.name,
+        profilePictureURL: task.assignee.profilePictureURL,
+      } as User),
   };
 }
 
@@ -99,6 +114,7 @@ export async function getAllTasks(): Promise<APIResult<Task[]>> {
   try {
     const response = await get("/api/tasks");
     const json = (await response.json()) as TaskJSON[];
+
     return { success: true, data: json.map(parseTask) };
   } catch (error) {
     return handleAPIError(error);
