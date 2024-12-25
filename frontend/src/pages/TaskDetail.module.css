@@ -1,0 +1,51 @@
+.taskDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font: var(--font-heading);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edit {
+  flex-shrink: 0;
+}
+
+.description {
+  font: var(--font-body);
+}
+
+.itemWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.itemWrapper span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemTitle {
+  font: var(--font-label);
+}
+
+.notFound {
+  margin-top: 2rem;
+  font: var(--font-heading);
+}

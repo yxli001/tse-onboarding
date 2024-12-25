@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { updateTask } from "src/api/tasks";
 import { CheckButton } from "src/components";
 import styles from "src/components/TaskItem.module.css";
@@ -25,11 +26,10 @@ export function TaskItem({ initialTask }: TaskItemProps) {
     setLoading(true);
 
     // Update the task's isChecked field
-    const updatedTask = { ...task, isChecked: !task.isChecked };
+    const updatedTask = { ...task, isChecked: !task.isChecked, assignee: task.assignee?._id };
 
     const res = await updateTask(updatedTask);
     if (!res.success) {
-      alert("Failed to update task");
       console.error(res.error);
       return setLoading(false);
     }
@@ -39,7 +39,7 @@ export function TaskItem({ initialTask }: TaskItemProps) {
   };
 
   return (
-    <div className={styles.item}>
+    <Link to={`/task/${task._id}`} className={styles.item}>
       <CheckButton
         checked={task.isChecked}
         className={styles.check}
@@ -50,6 +50,6 @@ export function TaskItem({ initialTask }: TaskItemProps) {
         <span className={styles.title}>{task.title}</span>
         {task.description && <span className={styles.description}>{task.description}</span>}
       </div>
-    </div>
+    </Link>
   );
 }
