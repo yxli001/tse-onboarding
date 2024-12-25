@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { updateTask } from "src/api/tasks";
 import { CheckButton } from "src/components";
 import styles from "src/components/TaskItem.module.css";
+import { UserTag } from "src/components/UserTag";
 
 import type { Task } from "src/api/tasks";
 
@@ -50,6 +51,7 @@ export function TaskItem({ initialTask }: TaskItemProps) {
         <span className={styles.title}>{task.title}</span>
         {task.description && <span className={styles.description}>{task.description}</span>}
       </div>
+      <UserTag user={task.assignee} className={styles.user} />
     </Link>
   );
 }

@@ -51,3 +51,7 @@
 .description {
   font: var(--font-body);
 }
+
+.user {
+  width: 12rem;
+}
