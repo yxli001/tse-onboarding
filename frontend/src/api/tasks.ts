@@ -47,7 +47,6 @@ interface TaskJSON {
  * @returns The parsed Task object
  */
 function parseTask(task: TaskJSON): Task {
-  console.log(task);
   return {
     _id: task._id,
     title: task.title,
@@ -72,6 +71,7 @@ function parseTask(task: TaskJSON): Task {
 export interface CreateTaskRequest {
   title: string;
   description?: string;
+  assignee?: string;
 }
 
 /**
@@ -84,6 +84,7 @@ export interface UpdateTaskRequest {
   description?: string;
   isChecked: boolean;
   dateCreated: Date;
+  assignee?: string;
 }
 
 /**

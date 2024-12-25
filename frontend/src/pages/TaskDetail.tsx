@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { Task, getTask } from "src/api/tasks";
-import { Button, Page } from "src/components";
+import { Button, Page, TaskForm } from "src/components";
+import { UserTag } from "src/components/UserTag";
 import styles from "src/pages/TaskDetail.module.css";
 
 export function TaskDetail() {
   const taskId = useParams<{ id: string }>().id;
 
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [task, setTask] = useState<Task | null>(null);
 
   useEffect(() => {
@@ -32,22 +34,37 @@ export function TaskDetail() {
       <p>
         <Link to="/">Back to home</Link>
       </p>
+      {isEditing && task !== null && (
+        <TaskForm
+          mode="edit"
+          task={task}
+          onSubmit={(updatedTask) => {
+            console.log(updatedTask);
+            setTask(updatedTask);
+            setIsEditing(false);
+          }}
+        />
+      )}
       {task === null ? (
         <p className={styles.notFound}>This task doesn&apos;t exist!</p>
       ) : (
         <div className={styles.taskDetail}>
           <div className={styles.titleWrapper}>
             <h1 className={styles.title}>{task.title}</h1>
-            <Button className={styles.edit} label="Edit Task" />
+            <Button
+              className={styles.edit}
+              label="Edit Task"
+              onClick={() => {
+                setIsEditing((prev) => !prev);
+              }}
+            />
           </div>
           <span className={styles.description}>
             {task.description ? task.description : "(No description)"}
           </span>
           <div className={styles.itemWrapper}>
             <span className={styles.itemTitle}>Assignee</span>
-            <span className={styles.itemValue}>
-              {task.assignee ? task.assignee.name : "Not assigned"}
-            </span>
+            <UserTag user={task.assignee} className={styles.itemValue} />
           </div>
           <div className={styles.itemWrapper}>
             <span className={styles.itemTitle}>Status</span>

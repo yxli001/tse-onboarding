@@ -49,7 +49,7 @@ export const getTask: RequestHandler = async (req, res, next) => {
 export const createTask: RequestHandler = async (req, res, next) => {
   // extract any errors that were found by the validator
   const errors = validationResult(req);
-  const { title, description, isChecked } = req.body;
+  const { title, description, isChecked, assignee } = req.body;
 
   try {
     // if there are errors, then this function throws an exception
@@ -59,6 +59,7 @@ export const createTask: RequestHandler = async (req, res, next) => {
       title: title,
       description: description,
       isChecked: isChecked,
+      assignee: assignee,
       dateCreated: Date.now(),
     });
 
@@ -108,6 +109,9 @@ export const updateTask: RequestHandler = async (req, res, next) => {
         isChecked,
         dateCreated,
         assignee,
+        $unset: {
+          assignee: !assignee ? "" : undefined, // remove assignee if assignee is null
+        },
       },
       {
         new: true,
